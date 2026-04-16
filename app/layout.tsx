@@ -37,11 +37,19 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
+      <head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3240884443002821"
+          crossOrigin="anonymous"
+        ></script>
+      </head>
+
       <body className="text-ink antialiased">
         <div className="relative flex min-h-screen flex-col">
           <Header />
