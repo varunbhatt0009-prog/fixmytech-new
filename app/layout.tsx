@@ -1,3 +1,4 @@
+import Script from "next/script";
 import type { Metadata } from "next";
 // @ts-ignore
 import "./globals.css";
@@ -46,11 +47,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="text-ink antialiased">
+
+        {/* ✅ AdSense Script (SAFE WAY) */}
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3240884443002821"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
+
         <div className="relative flex min-h-screen flex-col">
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />
         </div>
+
       </body>
     </html>
   );
