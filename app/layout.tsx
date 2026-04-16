@@ -12,6 +12,11 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   applicationName: siteConfig.name,
+
+  verification: {
+    google: "_1MtFGOYxfGgWIuR1TRlJAAMPY2Xx9VopWHehrHyU54"
+  },
+
   alternates: {
     canonical: "/"
   },
