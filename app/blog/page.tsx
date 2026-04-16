@@ -1,45 +1,82 @@
-import type { Metadata } from "next";
-import { PostCard } from "@/components/post-card";
-import { SearchBar } from "@/components/search-bar";
-import { getAllPosts } from "@/lib/posts";
+import { getPostBySlug, getAllPosts } from "@/lib/posts";
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import { Metadata } from "next";
+import { remark } from "remark";
+import html from "remark-html";
 
-export const metadata: Metadata = {
-  title: "Blog",
-  description:
-    "Browse the full FixMyTech archive of troubleshooting guides, repair walkthroughs, and tech optimization articles."
-};
-
-export default function BlogPage() {
+export async function generateStaticParams() {
   const posts = getAllPosts();
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+
+export async function generateMetadata({ params }: any): Promise<Metadata> {
+  const post = getPostBySlug(params.slug);
+  if (!post) return {};
+
+  return {
+    title: post.title,
+    description: post.description,
+  };
+}
+
+export default async function PostPage({ params }: any) {
+  const post = getPostBySlug(params.slug);
+
+  if (!post) {
+    notFound();
+  }
+
+  const processedContent = await remark()
+    .use(html)
+    .process(post.content);
+  const contentHtml = processedContent.toString();
 
   return (
-    <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-4 pb-20 pt-8 sm:px-6 lg:px-8">
-      <section className="rounded-[2rem] border border-white/60 bg-white/80 px-6 py-10 shadow-card backdrop-blur md:px-10">
-        <p className="text-sm font-medium uppercase tracking-[0.2em] text-accent-deep">
-          FixMyTech archive
-        </p>
-        <h1 className="mt-3 text-4xl font-bold tracking-tight text-ink">
-          Actionable blog posts for common tech issues
-        </h1>
-        <p className="mt-4 max-w-3xl text-base leading-8 text-slate-600">
-          Explore all articles by keyword, device problem, or tag. Every post
-          is stored as markdown for easy publishing and static performance.
-        </p>
-        <div className="mt-6 max-w-2xl">
-          <SearchBar posts={posts} />
-        </div>
-      </section>
+    <div className="mx-auto max-w-3xl px-4 py-10">
+      
+      {/* Back Button */}
+      <Link
+        href="/blog"
+        className="text-sm text-blue-600 hover:underline"
+      >
+        ← Back to all articles
+      </Link>
 
-      <section className="space-y-6">
-        <h2 className="text-2xl font-bold tracking-tight text-ink">
-          All articles
-        </h2>
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {posts.map((post) => (
-            <PostCard key={post.slug} post={post} />
-          ))}
-        </div>
-      </section>
+      {/* Title */}
+      <h1 className="mt-4 text-3xl font-bold leading-tight text-gray-900">
+        {post.title}
+      </h1>
+
+      {/* Description */}
+      <p className="mt-3 text-gray-600">
+        {post.description}
+      </p>
+
+      {/* Divider */}
+      <div className="my-6 h-px bg-gray-200" />
+
+      {/* Content */}
+      <article
+        className="prose prose-lg max-w-none"
+        dangerouslySetInnerHTML={{ __html: contentHtml }}
+      />
+
+      {/* Bottom CTA */}
+      <div className="mt-10 rounded-xl bg-gray-100 p-5 text-center">
+        <p className="text-sm text-gray-700">
+          Still facing issues? Try other guides from our blog.
+        </p>
+
+        <Link
+          href="/blog"
+          className="mt-3 inline-block text-blue-600 font-semibold hover:underline"
+        >
+          Browse more fixes →
+        </Link>
+      </div>
     </div>
   );
 }
