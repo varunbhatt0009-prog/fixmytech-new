@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { TagPill } from "@/components/tag-pill";
-import { formatDate, getAllPosts, getPostBySlug } from "@/lib/posts";
+import { formatDate, getAllPosts, getPostBySlug, getRelatedPosts } from "@/lib/posts";
 import { siteConfig } from "@/lib/site";
 
 type PageProps = {
@@ -57,14 +57,13 @@ export default async function PostPage({ params }: PageProps) {
     notFound();
   }
 
+  const relatedPosts = getRelatedPosts(post.slug, post.tags);
+
   return (
     <div className="mx-auto w-full max-w-5xl px-4 pb-20 pt-8 sm:px-6 lg:px-8">
 
-      {/* 🔥 Back Button */}
-      <Link
-        href="/blog"
-        className="text-sm text-blue-600 hover:underline"
-      >
+      {/* Back Button */}
+      <Link href="/blog" className="text-sm text-blue-600 hover:underline">
         ← Back to all articles
       </Link>
 
@@ -104,6 +103,31 @@ export default async function PostPage({ params }: PageProps) {
         />
 
       </article>
+
+      {/* 🔥 RELATED POSTS */}
+      {relatedPosts.length > 0 && (
+        <div className="mt-12">
+          <h2 className="text-2xl font-bold mb-6">Related Articles</h2>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            {relatedPosts.map((item) => (
+              <Link
+                key={item.slug}
+                href={`/blog/${item.slug}`}
+                className="block rounded-xl border p-4 hover:shadow-md transition"
+              >
+                <h3 className="font-semibold text-lg text-ink">
+                  {item.title}
+                </h3>
+                <p className="text-sm text-slate-500 mt-2">
+                  {item.description}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
