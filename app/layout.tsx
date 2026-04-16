@@ -8,48 +8,42 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
     default: `${siteConfig.name} | Practical Tech Fixes & Guides`,
-    template: `%s | ${siteConfig.name}`
+    template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
   applicationName: siteConfig.name,
 
   verification: {
-    google: "_1MtFGOYxfGgWIuR1TRlJAAMPY2Xx9VopWHehrHyU54"
+    google: "_1MtFGOYxfGgWIuR1TRlJAAMPY2Xx9VopWHehrHyU54",
   },
 
   alternates: {
-    canonical: "/"
+    canonical: "/",
   },
+
   openGraph: {
     title: `${siteConfig.name} | Practical Tech Fixes & Guides`,
     description: siteConfig.description,
     url: siteConfig.url,
     siteName: siteConfig.name,
     locale: "en_US",
-    type: "website"
+    type: "website",
   },
+
   twitter: {
     card: "summary_large_image",
     title: `${siteConfig.name} | Practical Tech Fixes & Guides`,
-    description: siteConfig.description
-  }
+    description: siteConfig.description,
+  },
 };
 
 export default function RootLayout({
-  children
+  children,
 }: {
   children: React.ReactNode;
 }) {
   return (
     <html lang="en">
-      <head>
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3240884443002821"
-          crossOrigin="anonymous"
-        ></script>
-      </head>
-
       <body className="text-ink antialiased">
         <div className="relative flex min-h-screen flex-col">
           <Header />
