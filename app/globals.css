@@ -103,3 +103,19 @@ body {
   background: transparent;
   padding: 0;
 }
+.prose {
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+.prose h1, .prose h2, .prose h3 {
+  color: #0f172a;
+}
+
+.prose p {
+  color: #334155;
+}
+
+.prose strong {
+  color: #0f172a;
+}

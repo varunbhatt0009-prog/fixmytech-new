@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { TagPill } from "@/components/tag-pill";
 import { formatDate, getAllPosts, getPostBySlug } from "@/lib/posts";
 import { siteConfig } from "@/lib/site";
@@ -57,21 +58,35 @@ export default async function PostPage({ params }: PageProps) {
   }
 
   return (
-    <div className="mx-auto w-full max-w-4xl px-4 pb-20 pt-8 sm:px-6 lg:px-8">
-      <article className="rounded-[2rem] border border-white/60 bg-white/85 px-6 py-10 shadow-card backdrop-blur md:px-10 md:py-14">
+    <div className="mx-auto w-full max-w-5xl px-4 pb-20 pt-8 sm:px-6 lg:px-8">
+
+      {/* 🔥 Back Button */}
+      <Link
+        href="/blog"
+        className="text-sm text-blue-600 hover:underline"
+      >
+        ← Back to all articles
+      </Link>
+
+      <article className="mt-4 rounded-[2rem] border border-white/60 bg-white/90 px-6 py-10 shadow-card backdrop-blur md:px-12 md:py-14">
+
+        {/* HEADER */}
         <header className="border-b border-slate-200 pb-8">
-          <p className="text-sm font-medium uppercase tracking-[0.18em] text-accent-deep">
-            Tech guide
+          <p className="text-xs font-semibold uppercase tracking-widest text-accent-deep">
+            Tech Guide
           </p>
-          <h1 className="mt-3 text-4xl font-bold tracking-tight text-ink sm:text-5xl">
+
+          <h1 className="mt-3 text-4xl font-bold tracking-tight text-ink sm:text-5xl leading-tight">
             {post.title}
           </h1>
-          <p className="mt-4 max-w-3xl text-base leading-8 text-slate-600 sm:text-lg">
+
+          <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-600">
             {post.description}
           </p>
 
           <div className="mt-6 flex flex-col gap-4 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
             <time dateTime={post.date}>{formatDate(post.date)}</time>
+
             {post.tags.length > 0 ? (
               <div className="flex flex-wrap gap-2">
                 {post.tags.map((tag) => (
@@ -82,10 +97,12 @@ export default async function PostPage({ params }: PageProps) {
           </div>
         </header>
 
+        {/* CONTENT */}
         <section
-          className="prose-content mx-auto mt-8 max-w-prose"
+          className="prose prose-lg mx-auto mt-10 max-w-3xl"
           dangerouslySetInnerHTML={{ __html: post.contentHtml }}
         />
+
       </article>
     </div>
   );
