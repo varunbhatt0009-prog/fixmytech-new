@@ -80,3 +80,15 @@ export function formatDate(date: string) {
     day: "numeric"
   }).format(new Date(date));
 }
+
+/* 🔥 NEW FUNCTION (RELATED POSTS) */
+export function getRelatedPosts(currentSlug: string, tags: string[]) {
+  const allPosts = getAllPosts();
+
+  return allPosts
+    .filter((post) => post.slug !== currentSlug)
+    .filter((post) =>
+      post.tags.some((tag) => tags.includes(tag))
+    )
+    .slice(0, 3);
+}
