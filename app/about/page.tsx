@@ -1,22 +1,22 @@
 export default function AboutPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10">
-      <h1 className="text-3xl font-bold mb-6">About Us</h1>
+    <div className="mx-auto max-w-4xl px-4 py-12">
+      <h1 className="text-3xl font-bold text-ink">About Us</h1>
 
-      <p className="mb-4">
-        Welcome to FixMyTech — a website created to help you solve everyday tech problems easily.
+      <p className="mt-6 text-slate-600 leading-7">
+        Welcome to FixMyTech — a simple platform built to help you fix everyday
+        tech problems quickly and easily.
       </p>
 
-      <p className="mb-4">
-        We focus on simple, practical solutions for issues related to WiFi, mobile devices, laptops, and internet problems.
+      <p className="mt-4 text-slate-600 leading-7">
+        Whether your WiFi is not working, your phone is overheating, or your
+        laptop is slow, we provide clear step-by-step solutions that actually
+        work.
       </p>
 
-      <p className="mb-4">
-        Our goal is to provide clear, easy-to-follow guides that anyone can understand and use.
-      </p>
-
-      <p>
-        Whether your internet is not working or your phone has issues, FixMyTech is here to help.
+      <p className="mt-4 text-slate-600 leading-7">
+        Our goal is to make technology simple and accessible for everyone.
+        No complicated terms — just real solutions.
       </p>
     </div>
   );

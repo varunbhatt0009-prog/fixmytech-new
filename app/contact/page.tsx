@@ -1,18 +1,18 @@
 export default function ContactPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10">
-      <h1 className="text-3xl font-bold mb-6">Contact Us</h1>
+    <div className="mx-auto max-w-4xl px-4 py-12">
+      <h1 className="text-3xl font-bold text-ink">Contact Us</h1>
 
-      <p className="mb-4">
-        If you have any questions, suggestions, or feedback, feel free to contact us.
+      <p className="mt-6 text-slate-600">
+        Have a question or need help? Feel free to contact us.
       </p>
 
-      <p className="mb-4">
-        Email: support@fixmytech.com
+      <p className="mt-4 text-slate-600">
+        📧 Email: wealthycreeper@gmail.com
       </p>
 
-      <p>
-        We will try to respond as soon as possible.
+      <p className="mt-4 text-slate-600">
+        We usually respond within 24–48 hours.
       </p>
     </div>
   );
