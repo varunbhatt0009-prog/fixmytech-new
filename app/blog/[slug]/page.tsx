@@ -4,7 +4,7 @@ import Link from "next/link";
 import { TagPill } from "@/components/tag-pill";
 import { formatDate, getAllPosts, getPostBySlug, getRelatedPosts } from "@/lib/posts";
 import { siteConfig } from "@/lib/site";
-import { ProgressBar } from "@/components/progress-bar"; // ✅ added
+import { ProgressBar } from "@/components/progress-bar";
 
 type PageProps = {
   params: Promise<{
@@ -41,11 +41,6 @@ export async function generateMetadata({
       description: post.description,
       type: "article",
       url: `${siteConfig.url}/blog/${post.slug}`
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: post.title,
-      description: post.description
     }
   };
 }
@@ -62,17 +57,17 @@ export default async function PostPage({ params }: PageProps) {
 
   return (
     <>
-      {/* 🔥 Progress Bar */}
       <ProgressBar />
 
-      <div className="mx-auto w-full max-w-5xl px-4 pb-20 pt-8 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl px-4 pb-20 pt-8 sm:px-6 lg:px-8">
 
-        {/* Back Button */}
+        {/* Back */}
         <Link href="/blog" className="text-sm text-blue-600 hover:underline">
           ← Back to all articles
         </Link>
 
-        <article className="mt-4 rounded-[2rem] border border-white/60 bg-white/90 px-6 py-10 shadow-card backdrop-blur md:px-12 md:py-14">
+        {/* ARTICLE */}
+        <article className="mt-4 rounded-[2rem] border border-white/60 bg-white/95 px-6 py-10 shadow-lg md:px-14 md:py-14">
 
           {/* HEADER */}
           <header className="border-b border-slate-200 pb-8">
@@ -80,46 +75,62 @@ export default async function PostPage({ params }: PageProps) {
               Tech Guide
             </p>
 
-            <h1 className="mt-3 text-4xl font-bold tracking-tight text-ink sm:text-5xl leading-tight">
+            <h1 className="mt-3 text-4xl font-bold leading-tight text-ink sm:text-5xl">
               {post.title}
             </h1>
 
-            <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-600">
+            <p className="mt-4 text-lg text-slate-600 max-w-3xl">
               {post.description}
             </p>
 
-            <div className="mt-6 flex flex-col gap-4 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+            <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-slate-500">
               <time dateTime={post.date}>{formatDate(post.date)}</time>
 
-              {post.tags.length > 0 ? (
+              {post.tags.length > 0 && (
                 <div className="flex flex-wrap gap-2">
                   {post.tags.map((tag) => (
                     <TagPill key={tag} tag={tag} />
                   ))}
                 </div>
-              ) : null}
+              )}
             </div>
           </header>
 
           {/* CONTENT */}
           <section
-            className="prose prose-lg mx-auto mt-10 max-w-3xl"
+            className="prose prose-lg max-w-3xl mx-auto mt-10 leading-relaxed"
             dangerouslySetInnerHTML={{ __html: post.contentHtml }}
           />
 
+          {/* CTA */}
+          <div className="mt-12 rounded-xl bg-gradient-to-r from-blue-50 to-purple-50 p-6 text-center">
+            <p className="text-lg font-medium text-ink">
+              Still stuck? Check more solutions 👇
+            </p>
+
+            <Link
+              href="/blog"
+              className="mt-4 inline-block rounded-full bg-accent px-6 py-3 text-white font-semibold hover:bg-accent-deep transition"
+            >
+              Browse all guides →
+            </Link>
+          </div>
+
         </article>
 
-        {/* 🔥 RELATED POSTS */}
+        {/* RELATED */}
         {relatedPosts.length > 0 && (
-          <div className="mt-12">
-            <h2 className="text-2xl font-bold mb-6">Related Articles</h2>
+          <div className="mt-14">
+            <h2 className="text-2xl font-bold mb-6 text-ink">
+              Related Articles
+            </h2>
 
             <div className="grid gap-6 md:grid-cols-2">
               {relatedPosts.map((item) => (
                 <Link
                   key={item.slug}
                   href={`/blog/${item.slug}`}
-                  className="block rounded-xl border p-4 hover:shadow-md transition"
+                  className="block rounded-xl border bg-white p-5 hover:shadow-md transition"
                 >
                   <h3 className="font-semibold text-lg text-ink">
                     {item.title}
